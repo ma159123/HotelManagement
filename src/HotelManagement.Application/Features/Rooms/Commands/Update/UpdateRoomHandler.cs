@@ -3,7 +3,7 @@ using HotelManagement.Domain.Common;
 using HotelManagement.Domain.Common.Errors;
 using MediatR;
 
-namespace HotelManagement.Application.Features.Rooms.Commands.Room.Update
+namespace HotelManagement.Application.Features.Rooms.Commands.Update
 {
     public class UpdateRoomHandler : IRequestHandler<UpdateRoomCommand, Result<string>>,
                                     IRequestHandler<UpdateRoomTypeCommand, Result<string>>

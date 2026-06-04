@@ -1,5 +1,5 @@
 ﻿// HotelManagement.Application/Mapping/Rooms/RoomMappingExtensions.cs
-using HotelManagement.Application.Features.Rooms.Commands.Room.Create;
+using HotelManagement.Application.Features.Rooms.Commands.Create;
 using HotelManagement.Application.Features.Rooms.DTOs;
 using HotelManagement.Domain.Entities;
 using Mapster;
@@ -43,5 +43,13 @@ public static class RoomMappingExtensions
     public static RoomType CreateRoomTypeCommandToRoomType(this CreateRoomTypeCommand roomTypeCommand)
     {
         return roomTypeCommand.Adapt<RoomType>();
+    }
+    public static RoomTypeResponse ToResponse(this RoomType roomType)
+    {
+        return roomType.Adapt<RoomTypeResponse>();
+    }
+    public static List<RoomTypeResponse> ToResponseList(this List<RoomType> roomTypes)
+    {
+        return roomTypes.Adapt<List<RoomTypeResponse>>();
     }
 }

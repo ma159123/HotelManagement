@@ -24,6 +24,10 @@ namespace HotelManagement.Infrastructure.Configurations
                 .WithMany(rt => rt.Rooms)
                 .HasForeignKey(r => r.RoomTypeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(r => r.Amenities)
+                .WithMany(a => a.Rooms)
+                .UsingEntity(j => j.ToTable("room_amenities"));
         }
     }
 }

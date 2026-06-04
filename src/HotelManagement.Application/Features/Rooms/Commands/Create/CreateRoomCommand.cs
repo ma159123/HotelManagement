@@ -2,7 +2,7 @@
 using HotelManagement.Domain.Enums;
 using MediatR;
 
-namespace HotelManagement.Application.Features.Rooms.Commands.Room.Create;
+namespace HotelManagement.Application.Features.Rooms.Commands.Create;
 
 public record CreateRoomCommand
 (

@@ -4,7 +4,7 @@ using HotelManagement.Domain.Common;
 using HotelManagement.Domain.Common.Errors;
 using MediatR;
 
-namespace HotelManagement.Application.Features.Rooms.Commands.Room.Create
+namespace HotelManagement.Application.Features.Rooms.Commands.Create
 {
     internal class CreateRoomHandlers : IRequestHandler<CreateRoomCommand, Result<string>>
                                         , IRequestHandler<CreateRoomTypeCommand, Result<string>>

@@ -15,5 +15,7 @@ namespace HotelManagement.Domain.Entities
 
         // Navigation Properties
         public RoomType RoomType { get; set; } = null!;
+        public ICollection<Amenity> Amenities { get; set; } = new List<Amenity>();
+
     }
 }

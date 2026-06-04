@@ -3,7 +3,7 @@ using HotelManagement.Domain.Common;
 using HotelManagement.Domain.Common.Errors;
 using MediatR;
 
-namespace HotelManagement.Application.Features.Rooms.Commands.Room.Delete
+namespace HotelManagement.Application.Features.Rooms.Commands.Delete
 {
     internal class DeleteRoomHandler : IRequestHandler<DeleteRoomCommand, Result<string>>,
                                        IRequestHandler<DeleteRoomTypeCommand, Result<string>>
