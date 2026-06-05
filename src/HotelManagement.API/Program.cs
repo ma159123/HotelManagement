@@ -1,6 +1,7 @@
 using HotelManagement.Application;
 using HotelManagement.Application.Mapping;
 using HotelManagement.Infrastructure;
+using HotelManagement.Infrastructure.Middlewares;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<GlobalExceptionHandler>();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

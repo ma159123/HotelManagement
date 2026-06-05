@@ -31,10 +31,10 @@ public static class RoomMappingExtensions
         return room.Adapt<RoomResponse>();
     }
 
-    public static List<RoomResponse> ToResponseList(this List<Room> rooms)
-    {
-        return rooms.Adapt<List<RoomResponse>>();
-    }
+    //public static List<RoomResponse> ToResponseList(this List<Room> rooms)
+    //{
+    //    return rooms.Adapt<List<RoomResponse>>();
+    //}
     public static Room CreateRoomCommandToRoom(this CreateRoomCommand roomCommand)
     {
         return roomCommand.Adapt<Room>();
