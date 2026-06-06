@@ -1,7 +1,7 @@
 ﻿using HotelManagement.Domain.Common;
 using MediatR;
 
-namespace HotelManagement.Application.Features.Rooms.Commands.Delete
+namespace HotelManagement.Application.Features.RoomTypes.Commands.Delete
 {
     public record DeleteRoomTypeCommand(
      int Id

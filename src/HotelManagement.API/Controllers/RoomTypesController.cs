@@ -1,8 +1,8 @@
-﻿using HotelManagement.Application.Features.Rooms.Commands.Create;
-using HotelManagement.Application.Features.Rooms.Commands.Delete;
-using HotelManagement.Application.Features.Rooms.Commands.Update;
-using HotelManagement.Application.Features.Rooms.Queries.GetAllRoomTypesQuery;
-using HotelManagement.Application.Features.Rooms.Queries.GetRoomTypeById;
+﻿using HotelManagement.Application.Features.RoomTypes.Commands.Create;
+using HotelManagement.Application.Features.RoomTypes.Commands.Delete;
+using HotelManagement.Application.Features.RoomTypes.Commands.Update;
+using HotelManagement.Application.Features.RoomTypes.Queries.GetAllRoomTypesQuery;
+using HotelManagement.Application.Features.RoomTypes.Queries.GetRoomTypeById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

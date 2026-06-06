@@ -1,10 +1,18 @@
 ﻿using HotelManagement.Application.Interfaces.Repositories;
+using HotelManagement.Application.Interfaces.Services;
+using HotelManagement.Application.Settings;
+using HotelManagement.Domain.Entities;
 using HotelManagement.Infrastructure.Data;
 using HotelManagement.Infrastructure.Middlewares;
 using HotelManagement.Infrastructure.Repositories;
+using HotelManagement.Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HotelManagement.Infrastructure
 {
@@ -21,6 +29,52 @@ namespace HotelManagement.Infrastructure
 
             services.AddTransient<IRoomsRepo, RoomsRepo>();
             services.AddTransient<IAmenityRepo, AmenityRepo>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.Configure<EmailSettings>(
+    configuration.GetSection("EmailSettings"));
+
+            services.AddScoped<IEmailService, EmailService>();
+            // Identity
+            services.AddIdentity<Guest, Role>(options =>
+            {
+                // Password
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+
+                // Email
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
+
+                // Lockout
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
+            // JWT
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["Jwt:Issuer"],
+                    ValidAudience = configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                };
+            });
+
 
             return services;
         }

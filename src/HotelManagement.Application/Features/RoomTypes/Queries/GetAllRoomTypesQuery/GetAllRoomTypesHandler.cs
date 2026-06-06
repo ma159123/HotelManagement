@@ -5,7 +5,7 @@ using HotelManagement.Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace HotelManagement.Application.Features.Rooms.Queries.GetAllRoomTypesQuery
+namespace HotelManagement.Application.Features.RoomTypes.Queries.GetAllRoomTypesQuery
 {
     internal class GetAllRoomTypesHandler : IRequestHandler<GetAllRoomTypesQuery, Result<PagedRoomTypeResponse>>
     {

@@ -1,6 +1,7 @@
 ﻿// HotelManagement.Application/Mapping/Rooms/RoomMappingExtensions.cs
 using HotelManagement.Application.Features.Rooms.Commands.Create;
 using HotelManagement.Application.Features.Rooms.DTOs;
+using HotelManagement.Application.Features.RoomTypes.Commands.Create;
 using HotelManagement.Domain.Entities;
 using Mapster;
 

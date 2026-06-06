@@ -2,7 +2,7 @@
 using HotelManagement.Domain.Common;
 using MediatR;
 
-namespace HotelManagement.Application.Features.Rooms.Queries.GetRoomTypeById
+namespace HotelManagement.Application.Features.RoomTypes.Queries.GetRoomTypeById
 {
     public class GetRoomTypeByIdQuery : IRequest<Result<RoomTypeResponse>>
     {

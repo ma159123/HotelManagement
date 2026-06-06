@@ -5,7 +5,7 @@ using HotelManagement.Domain.Common;
 using HotelManagement.Domain.Common.Errors;
 using MediatR;
 
-namespace HotelManagement.Application.Features.Rooms.Queries.GetRoomTypeById
+namespace HotelManagement.Application.Features.RoomTypes.Queries.GetRoomTypeById
 {
     internal class GetRoomTypeByIdHandler : IRequestHandler<GetRoomTypeByIdQuery, Result<RoomTypeResponse>>
     {

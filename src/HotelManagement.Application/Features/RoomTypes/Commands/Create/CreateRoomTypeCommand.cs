@@ -1,7 +1,7 @@
 ﻿using HotelManagement.Domain.Common;
 using MediatR;
 
-namespace HotelManagement.Application.Features.Rooms.Commands.Create
+namespace HotelManagement.Application.Features.RoomTypes.Commands.Create
 {
     public record CreateRoomTypeCommand
     (
