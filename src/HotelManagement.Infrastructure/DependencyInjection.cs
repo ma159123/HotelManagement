@@ -30,6 +30,7 @@ namespace HotelManagement.Infrastructure
             services.AddTransient<IRoomsRepo, RoomsRepo>();
             services.AddTransient<IAmenityRepo, AmenityRepo>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserRepo, UserRepo>();
             services.Configure<EmailSettings>(
     configuration.GetSection("EmailSettings"));
 
