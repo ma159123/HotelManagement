@@ -1,4 +1,5 @@
 ﻿using HotelManagement.Application.Features.Auth.Commands.ConfirmEmail;
+using HotelManagement.Application.Features.Auth.Commands.resend_confirmation_email;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,19 @@ namespace HotelManagement.API.Controllers
         {
             var result = await _mediator.Send(
                 new ConfirmEmailCommand(email, token));
+
+            if (result.IsFailure)
+                return StatusCode(result.Error.StatusCode!.Value, result.Error);
+
+            return Ok(result.Value);
+        }
+
+        [HttpGet("resend-confirmation-email")]
+        public async Task<IActionResult> ResendConfirmationEmail(
+  [FromQuery] string email)
+        {
+            var result = await _mediator.Send(
+                new ResendEmailConfirmationCommand(email));
 
             if (result.IsFailure)
                 return StatusCode(result.Error.StatusCode!.Value, result.Error);

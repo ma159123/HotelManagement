@@ -8,8 +8,8 @@ namespace HotelManagement.Application.Features.Auth.Commands.ChangePassword
 {
     internal class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, Result<string>>
     {
-        private readonly UserManager<Guest> _userManager;
-        public ChangePasswordCommandHandler(UserManager<Guest> userManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public ChangePasswordCommandHandler(UserManager<ApplicationUser> userManager)
         {
             this._userManager = userManager;
         }
@@ -18,13 +18,13 @@ namespace HotelManagement.Application.Features.Auth.Commands.ChangePassword
          CancellationToken cancellationToken)
         {
             // 1.get guest
-            var guest = await _userManager.FindByIdAsync(request.Id);
-            if (guest == null)
+            var user = await _userManager.FindByIdAsync(request.Id);
+            if (user == null)
                 return Result.Failure<string>(Error.NotFound);
 
             // 2.Change pass
             var result = await _userManager
-                .ChangePasswordAsync(guest, request.CurrentPassword, request.NewPassword);
+                .ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
 
             if (!result.Succeeded)
                 return Result.Failure<string>(

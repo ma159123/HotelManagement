@@ -2,6 +2,7 @@
 using HotelManagement.Application.Features.Rooms.Commands.Update;
 using HotelManagement.Application.Features.Rooms.Queries.GetAllRooms;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagement.API.Controllers
@@ -20,6 +21,7 @@ namespace HotelManagement.API.Controllers
         //rooms
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllRooms([FromQuery] GetAllRoomsQuery getAllRoomsQuery)
         {
             var result = await _mediator.Send(getAllRoomsQuery);
@@ -28,6 +30,7 @@ namespace HotelManagement.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateRoom(CreateRoomCommand roomCommand)
         {
             var result = await _mediator.Send(roomCommand);
@@ -35,6 +38,7 @@ namespace HotelManagement.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateRoom([FromForm] UpdateRoomCommand roomCommand)
         {
             var result = await _mediator.Send(roomCommand);

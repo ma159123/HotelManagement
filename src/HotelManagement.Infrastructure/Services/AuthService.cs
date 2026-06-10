@@ -5,11 +5,13 @@ using HotelManagement.Application.Interfaces.Services;
 using HotelManagement.Domain.Common;
 using HotelManagement.Domain.Common.Errors;
 using HotelManagement.Domain.Entities;
+using HotelManagement.Domain.Enums;
 using HotelManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -19,14 +21,14 @@ namespace HotelManagement.Infrastructure.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly UserManager<Guest> _userManager;
-        private readonly SignInManager<Guest> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
         private readonly ApplicationDbContext _context;
         public AuthService(
-        UserManager<Guest> userManager,
-        SignInManager<Guest> signInManager,
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
         IEmailService emailService,
         IConfiguration configuration,
         ApplicationDbContext context)
@@ -65,7 +67,7 @@ namespace HotelManagement.Infrastructure.Services
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
                 return Result.Failure<RegisterResponse>(new Error("Identity.Error", errors, 400));
             }
-
+            await _userManager.AddToRoleAsync(guest, RoleEnum.Guest.ToString());
             // 4 - generate Email Confirmation Token
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(guest);
             // 3. Encode  Token (have special characters)
@@ -114,8 +116,9 @@ namespace HotelManagement.Infrastructure.Services
             if (!result.Succeeded)
                 return Result.Failure<LoginResponse>(
                     new Error("Auth.InvalidCredentials", "Invalid email or password.", 401));
+            var roles = await _userManager.GetRolesAsync(guest);
             // 3 - generate Access Token
-            var accessToken = GenerateAccessToken(guest);
+            var accessToken = GenerateAccessToken(guest, roles);
             // 4 - generate Refresh Token 
             var refreshToken = await GenerateRefreshTokenAsync(guest.Id, cancellationToken);
 
@@ -136,7 +139,7 @@ namespace HotelManagement.Infrastructure.Services
         }
 
         // ─── Generate Access Token ───────────────────
-        private (string Token, DateTime Expiry) GenerateAccessToken(Guest guest)
+        private (string Token, DateTime Expiry) GenerateAccessToken(ApplicationUser guest, IList<string> roles)
         {
             var claims = new List<Claim>
         {
@@ -145,6 +148,9 @@ namespace HotelManagement.Infrastructure.Services
             new(ClaimTypes.Name, guest.FullName),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
+            // add Roles 
+            foreach (var role in roles)
+                claims.Add(new Claim(ClaimTypes.Role, role));
 
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));

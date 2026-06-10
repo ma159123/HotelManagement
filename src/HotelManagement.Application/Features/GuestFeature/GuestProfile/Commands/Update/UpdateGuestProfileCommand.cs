@@ -2,7 +2,7 @@
 using HotelManagement.Domain.Enums;
 using MediatR;
 
-namespace HotelManagement.Application.Features.GuestFeature.GuestProfile.Update
+namespace HotelManagement.Application.Features.GuestFeature.GuestProfile.Commands.Update
 {
     public record UpdateGuestProfileCommand
     (

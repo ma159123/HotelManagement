@@ -1,5 +1,5 @@
-﻿using HotelManagement.Application.Features.GuestFeature.GuestProfile.Create;
-using HotelManagement.Application.Features.GuestFeature.GuestProfile.Update;
+﻿using HotelManagement.Application.Features.GuestFeature.GuestProfile.Commands.Update;
+using HotelManagement.Application.Features.GuestFeature.GuestProfile.Create;
 using HotelManagement.Domain.Entities;
 using Mapster;
 

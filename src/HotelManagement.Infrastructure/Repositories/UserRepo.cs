@@ -2,26 +2,28 @@
 using HotelManagement.Domain.Entities;
 using HotelManagement.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagement.Infrastructure.Repositories
 {
     public class UserRepo : IUserRepo
     {
-        private readonly UserManager<Guest> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
-        public UserRepo(ApplicationDbContext context, UserManager<Guest> userManager)
+        public UserRepo(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
-        public void CreateGuestProfile(GuestProfile guestProfile)
+        public async Task CreateGuestProfileAsync(GuestProfile guestProfile)
         {
             _context.GuestProfiles.Add(guestProfile);
+            await SaveChanges();
         }
 
-        public async Task<bool> IsGuestExistAsync(string id)
+        public bool IsGuestExistAsync(string id)
         {
-            var res = await _userManager.FindByIdAsync(id);
+            var res = _context.Guests.FirstOrDefault(g => g.Id == id);
             if (res == null) return false;
             return true;
         }
@@ -42,7 +44,8 @@ namespace HotelManagement.Infrastructure.Repositories
 
         public async Task UpdateGuestAsync(Guest guest)
         {
-            await _userManager.UpdateAsync(guest);
+            _context.Guests.Update(guest);
+            await SaveChanges();
         }
 
         public void UpdateGuestProfile(GuestProfile guestProfile)
@@ -50,9 +53,9 @@ namespace HotelManagement.Infrastructure.Repositories
             _context.GuestProfiles.Update(guestProfile);
         }
 
-        public async Task<Guest?> GetGuest(string id)
+        public Guest? GetGuest(string id)
         {
-            var res = await _userManager.FindByIdAsync(id);
+            var res = _context.Guests.FirstOrDefault(g => g.Id == id);
 
             return res;
         }
@@ -60,6 +63,13 @@ namespace HotelManagement.Infrastructure.Repositories
         public async Task SaveChanges()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public Guest? GetGuestIncludeProfile(string id)
+        {
+            var res = _context.Guests.Include(u => u.Profile).FirstOrDefault(u => u.Id == id);
+
+            return res;
         }
     }
 }

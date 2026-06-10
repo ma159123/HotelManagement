@@ -16,7 +16,7 @@ namespace HotelManagement.Application.Features.GuestFeature.Commands.Update
         public async Task<Result<string>> Handle(UpdateGuestCommand request, CancellationToken cancellationToken)
         {
             //check if profile exist
-            var guest = await _userRepo.GetGuest(request.GuestId);
+            var guest = _userRepo.GetGuest(request.GuestId);
             if (guest == null)
             {
                 return Result.Failure<string>(Error.NotFound);

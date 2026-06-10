@@ -36,7 +36,7 @@ namespace HotelManagement.Infrastructure
 
             services.AddScoped<IEmailService, EmailService>();
             // Identity
-            services.AddIdentity<Guest, Role>(options =>
+            services.AddIdentity<ApplicationUser, Role>(options =>
             {
                 // Password
                 options.Password.RequiredLength = 8;

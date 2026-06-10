@@ -1,10 +1,11 @@
-﻿using HotelManagement.Application.Interfaces.Repositories;
+﻿using HotelManagement.Application.Features.GuestFeature.GuestProfile.Create;
+using HotelManagement.Application.Interfaces.Repositories;
 using HotelManagement.Application.Mapping.User;
 using HotelManagement.Domain.Common;
 using HotelManagement.Domain.Common.Errors;
 using MediatR;
 
-namespace HotelManagement.Application.Features.GuestFeature.GuestProfile.Create
+namespace HotelManagement.Application.Features.GuestFeature.GuestProfile.Commands.Create
 {
     public class CreateGuestProfileHandler : IRequestHandler<CreateGuestProfileCommand, Result<string>>
     {
@@ -25,7 +26,7 @@ namespace HotelManagement.Application.Features.GuestFeature.GuestProfile.Create
             //mapping 
             var guestProfile = request.ToGuestProfile();
             //create
-            _userRepo.CreateGuestProfile(guestProfile);
+            await _userRepo.CreateGuestProfileAsync(guestProfile);
             return Result.Success<string>("Created");
         }
     }

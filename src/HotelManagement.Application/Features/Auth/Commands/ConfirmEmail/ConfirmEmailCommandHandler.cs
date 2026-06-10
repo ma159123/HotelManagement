@@ -10,8 +10,8 @@ namespace HotelManagement.Application.Features.Auth.Commands.ConfirmEmail
 {
     internal class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, Result<string>>
     {
-        private readonly UserManager<Guest> _userManager;
-        public ConfirmEmailCommandHandler(UserManager<Guest> userManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public ConfirmEmailCommandHandler(UserManager<ApplicationUser> userManager)
         {
             this._userManager = userManager;
         }
@@ -20,8 +20,8 @@ namespace HotelManagement.Application.Features.Auth.Commands.ConfirmEmail
      CancellationToken cancellationToken)
         {
             // 1.get guest
-            var guest = await _userManager.FindByEmailAsync(request.Email);
-            if (guest == null)
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
                 return Result.Failure<string>(Error.NotFound);
 
             // 2. Decode  Token
@@ -30,7 +30,7 @@ namespace HotelManagement.Application.Features.Auth.Commands.ConfirmEmail
 
             // 3. confirm email
             var result = await _userManager
-                .ConfirmEmailAsync(guest, decodedToken);
+                .ConfirmEmailAsync(user, decodedToken);
 
             if (!result.Succeeded)
                 return Result.Failure<string>(

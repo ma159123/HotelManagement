@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HotelManagement.Infrastructure.Data
 {
 
-    public class ApplicationDbContext : IdentityDbContext<Guest>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Role, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
            : base(options)
@@ -14,6 +14,7 @@ namespace HotelManagement.Infrastructure.Data
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         //public DbSet<GuestProfile> GuestProfiles { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Guest> Guests { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<GuestProfile> GuestProfiles { get; set; }
@@ -22,7 +23,11 @@ namespace HotelManagement.Infrastructure.Data
             builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
             base.OnModelCreating(builder);
+            // Guest separate table
+            builder.Entity<Guest>().ToTable("Guests");
 
+            // Admin separate table  
+            builder.Entity<ApplicationUser>().ToTable("Users");
         }
 
     }

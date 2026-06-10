@@ -1,6 +1,6 @@
 ﻿namespace HotelManagement.Domain.Enums
 {
-    public enum GuestStatus
+    public enum UserStatus
     {
         Active,
         Inactive,
