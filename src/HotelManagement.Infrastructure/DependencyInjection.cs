@@ -35,6 +35,8 @@ namespace HotelManagement.Infrastructure
     configuration.GetSection("EmailSettings"));
 
             services.AddScoped<IEmailService, EmailService>();
+            // services.AddScoped<ITokenCache, RedisTokenCache>();
+            services.AddScoped<ITokenCache, MemoryTokenCache>();
             // Identity
             services.AddIdentity<ApplicationUser, Role>(options =>
             {
@@ -76,7 +78,12 @@ namespace HotelManagement.Infrastructure
                 };
             });
 
-
+            //services.AddStackExchangeRedisCache(options =>
+            //{
+            //    options.Configuration = configuration.GetConnectionString("Redis");
+            //    options.InstanceName = "HotelManagement_";
+            //});
+            services.AddMemoryCache();
             return services;
         }
     }

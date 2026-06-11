@@ -27,4 +27,14 @@ public record Error(string Code, string Description, int? StatusCode)
      "Not Found",
      StatusCodes.Status404NotFound
  );
+    public static readonly Error AlreadyEmailConfirmed = new(
+  "Confirmation.AlreadyEmailConfirmed",
+  "Already email confirmed",
+  StatusCodes.Status400BadRequest
+);
+    public static readonly Error TooManyRequests = new(
+"Auth.TooManyRequests",
+"Too many requests",
+StatusCodes.Status400BadRequest
+);
 }
