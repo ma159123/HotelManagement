@@ -37,4 +37,9 @@ public record Error(string Code, string Description, int? StatusCode)
 "Too many requests",
 StatusCodes.Status400BadRequest
 );
+    public static readonly Error Unauthorized = new(
+"Auth.Unauthorized",
+"User not authenticated",
+StatusCodes.Status401Unauthorized
+);
 }

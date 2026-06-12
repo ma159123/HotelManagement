@@ -18,6 +18,10 @@ namespace HotelManagement.Infrastructure.Data
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<GuestProfile> GuestProfiles { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<BookingService> BookingServices { get; set; }
+
         override protected void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);

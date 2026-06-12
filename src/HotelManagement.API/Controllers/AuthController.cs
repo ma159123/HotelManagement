@@ -2,6 +2,7 @@
 using HotelManagement.Application.Features.Auth.Commands.Login;
 using HotelManagement.Application.Features.Auth.Commands.Register;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagement.API.Controllers
@@ -35,6 +36,7 @@ namespace HotelManagement.API.Controllers
         }
 
         [HttpPatch("change-password")]
+        [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         {
             var result = await _mediator.Send(command);
