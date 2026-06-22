@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using BookingServices = HotelManagement.Infrastructure.Services.BookingServices;
 
 namespace HotelManagement.Infrastructure
 {
@@ -31,6 +32,8 @@ namespace HotelManagement.Infrastructure
             services.AddTransient<IAmenityRepo, AmenityRepo>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IBookingService, BookingServices>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.Configure<EmailSettings>(
     configuration.GetSection("EmailSettings"));
 

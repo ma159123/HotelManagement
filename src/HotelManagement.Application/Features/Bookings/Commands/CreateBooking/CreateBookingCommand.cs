@@ -4,8 +4,9 @@ using MediatR;
 namespace HotelManagement.Application.Features.Bookings.Commands.CreateBooking;
 
 public record CreateBookingCommand
-(int RoomId,
+(
+int RoomId,
 DateTime CheckIn,
 DateTime CheckOut,
 List<int>? ServiceIds
-) : IRequest<Result<int>>;
+) : IRequest<Result<int?>>;
