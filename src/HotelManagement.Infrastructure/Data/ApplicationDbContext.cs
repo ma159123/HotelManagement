@@ -21,7 +21,7 @@ namespace HotelManagement.Infrastructure.Data
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<BookingService> BookingServices { get; set; }
-
+        public DbSet<Payment> Payments { get; set; }
         override protected void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);

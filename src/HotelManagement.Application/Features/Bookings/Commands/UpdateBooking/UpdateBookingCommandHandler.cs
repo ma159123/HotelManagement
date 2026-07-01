@@ -21,6 +21,7 @@ namespace HotelManagement.Application.Features.Bookings.Commands.UpdateBooking
             if (string.IsNullOrEmpty(userId))
                 return Result.Failure<string?>(Error.Unauthorized);
             //
+            return Result.Failure<string?>(Error.Unauthorized);
         }
     }
 }

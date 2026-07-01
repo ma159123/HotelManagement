@@ -97,7 +97,7 @@ namespace HotelManagement.Infrastructure.Services
 
         public Task<Booking?> GetBookingByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return _context.Bookings.FirstOrDefaultAsync(b => b.BookingId == id, cancellationToken);
+            return _context.Bookings.Include(b => b.Guest).FirstOrDefaultAsync(b => b.BookingId == id, cancellationToken);
         }
 
         public IQueryable<Booking> GetBookings()

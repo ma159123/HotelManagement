@@ -33,6 +33,10 @@ namespace HotelManagement.Infrastructure
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IBookingService, BookingServices>();
+            services.AddHttpClient<IPaymobService, PaymobService>();
+            services.Configure<PaymobSettings>(
+    configuration.GetSection("Paymob"));
+            services.AddScoped<IPaymentRepo, PaymentRepo>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.Configure<EmailSettings>(
     configuration.GetSection("EmailSettings"));
