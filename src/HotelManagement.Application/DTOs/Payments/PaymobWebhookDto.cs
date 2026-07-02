@@ -2,7 +2,7 @@
 {
     public class PaymobWebhookDto
     {
-        public PaymobTransactionDto Obj { get; set; }
+        public PaymobTransactionDto paymobTransactionDto { get; set; }
         public string Hmac { get; set; }
     }
 }

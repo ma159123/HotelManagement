@@ -28,7 +28,7 @@ namespace HotelManagement.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PaymobWebhook([FromBody] PaymobWebhookDto dto)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(dto);
             return Ok(result);
         }
 

@@ -7,6 +7,7 @@ namespace HotelManagement.Application.Features.Bookings.Commands.UpdateBooking
     public record UpdateBookingCommand
     (
         int bookingId,
+        int paymentId,
         BookingStatus BookingStatus
         ) : IRequest<Result<string>>;
 

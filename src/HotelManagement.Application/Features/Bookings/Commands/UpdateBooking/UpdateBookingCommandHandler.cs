@@ -20,8 +20,16 @@ namespace HotelManagement.Application.Features.Bookings.Commands.UpdateBooking
             var userId = _currentUserService.UserId;
             if (string.IsNullOrEmpty(userId))
                 return Result.Failure<string?>(Error.Unauthorized);
-            //
-            return Result.Failure<string?>(Error.Unauthorized);
+            // get booking
+            var booking = await _bookingService.GetBookingByIdAsync(request.bookingId, cancellationToken);
+            if (booking == null)
+            {
+                return Result.Failure<string?>(Error.NotFound);
+            }
+            booking.Status = request.BookingStatus;
+            booking.PaymentId = request.paymentId;
+            await _bookingService.ConfirmBookingAsync(booking, cancellationToken);
+            return Result.Success<string>("Booking Confirmed");
         }
     }
 }
